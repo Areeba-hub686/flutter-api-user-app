@@ -242,6 +242,3 @@ https://github.com/Areeba-hub686
 
 ---
 
-# 📄 License
-
-This project is licensed under the MIT License.
