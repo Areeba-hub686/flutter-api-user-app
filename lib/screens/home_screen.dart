@@ -12,7 +12,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final ApiService _apiService = ApiService();
-
   late Future<List<User>> _usersFuture;
 
   @override
@@ -33,13 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xFFF4FBFB),
-
         appBar: AppBar(
-          toolbarHeight: 95,
+          toolbarHeight: 90,
           elevation: 0,
           automaticallyImplyLeading: false,
           centerTitle: true,
-
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -52,7 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               bottom: Radius.circular(30),
@@ -70,7 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
               SizedBox(height: 4),
 
               Text(
@@ -87,7 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
         body: FutureBuilder<List<User>>(
             future: _usersFuture,
             builder: (context, snapshot) {
-
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
                   child: Column(
@@ -115,7 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               }
-
               if (snapshot.hasError) {
                 return Center(
                   child: Padding(
@@ -128,9 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           size: 90,
                           color: Colors.grey.shade500,
                         ),
-
                         const SizedBox(height: 20),
-
                         const Text(
                           "Connection Failed",
                           style: TextStyle(
@@ -138,7 +129,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-
                         const SizedBox(height: 10),
 
                         const Text(
@@ -149,22 +139,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 15,
                           ),
                         ),
-
                         const SizedBox(height: 25),
-
                         ElevatedButton.icon(
                           onPressed: _refreshUsers,
                           icon: const Icon(Icons.refresh),
                           label: const Text("Retry"),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF009688),
+                            backgroundColor:
+                            const Color(0xFF009688),
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
+                            padding:
+                            const EdgeInsets.symmetric(
                               horizontal: 30,
                               vertical: 14,
                             ),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius:
+                              BorderRadius.circular(12),
                             ),
                           ),
                         ),
@@ -184,7 +175,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         size: 90,
                         color: Colors.grey,
                       ),
-
                       SizedBox(height: 20),
 
                       Text(
@@ -194,9 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-
                       SizedBox(height: 8),
-
                       Text(
                         "Pull down to refresh",
                         style: TextStyle(
@@ -210,153 +198,184 @@ class _HomeScreenState extends State<HomeScreen> {
 
               final users = snapshot.data!;
               return RefreshIndicator(
-                color: const Color(0xFF009688),
-                onRefresh: _refreshUsers,
-                child: ListView.builder(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
-                  itemCount: users.length,
-                  itemBuilder: (context, index) {
-                    final user = users[index];
-
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: Hero(
-                        tag: user.id,
-                        child: Card(
-                          elevation: 4,
-                          shadowColor: Colors.black12,
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(18),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => ProfileScreen(user: user),
-                                ),
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Row(
-                                children: [
-
-                                  CircleAvatar(
-                                    radius: 32,
-                                    backgroundColor: const Color(0xFFE0F7F7),
-                                    child: Text(
-                                      user.name[0].toUpperCase(),
-                                      style: const TextStyle(
-                                        color: Color(0xFF009688),
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-
-                                  const SizedBox(width: 16),
-
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-
-                                        Text(
-                                          user.name,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-
-                                        const SizedBox(height: 8),
-
-                                        Row(
-                                          children: [
-
-                                            const Icon(
-                                              Icons.email_outlined,
-                                              size: 16,
-                                              color: Color(0xFF009688),
-                                            ),
-
-                                            const SizedBox(width: 6),
-
-                                            Expanded(
-                                              child: Text(
-                                                user.email,
-                                                maxLines: 1,
-                                                overflow:
-                                                TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.grey,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        const SizedBox(height: 10),
-
-                                        Container(
-                                          padding:
-                                          const EdgeInsets.symmetric(
-                                            horizontal: 10,
-                                            vertical: 5,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color:
-                                            const Color(0xFFE0F7F7),
-                                            borderRadius:
-                                            BorderRadius.circular(20),
-                                          ),
-                                          child: Text(
-                                            "@${user.username}",
-                                            style: const TextStyle(
-                                              color:
-                                              Color(0xFF009688),
-                                              fontWeight:
-                                              FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-
-                                  const SizedBox(width: 10),
-
-                                  Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF009688),
-                                      borderRadius:
-                                      BorderRadius.circular(12),
-                                    ),
-                                    child: const Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      color: Colors.white,
-                                      size: 18,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                  color: const Color(0xFF009688),
+                  onRefresh: _refreshUsers,
+                  child: ListView.builder(
+                      physics:
+                      const AlwaysScrollableScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(
+                        16,
+                        20,
+                        16,
+                        20,
                       ),
-                    );
-                  },
-                ),
+                      itemCount: users.length,
+                      itemBuilder: (context, index) {
+                        final user = users[index];
+                        return Padding(
+                            padding:
+                            const EdgeInsets.only(bottom: 16),
+                            child: Hero(
+                                tag: "user_${user.id}",
+                                child: Card(
+                                    elevation: 4,
+                                    shadowColor: Colors.black12,
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(18),
+                                    ),
+                                    child: InkWell(
+                                        borderRadius:
+                                        BorderRadius.circular(18),
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  ProfileScreen(
+                                                    user: user,
+                                                  ),
+                                            ),
+                                          );
+                                        },
+
+                                        child: Padding(
+                                            padding:
+                                            const EdgeInsets.symmetric(
+                                              horizontal: 16,
+                                              vertical: 12,
+                                            ),
+                                            child: Row(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                children: [
+                                                  CircleAvatar(
+                                                    radius: 32,
+                                                    backgroundColor:
+                                                    const Color(0xFFE0F7F7),
+                                                    child: Text(
+                                                      user.name[0].toUpperCase(),
+                                                      style: const TextStyle(
+                                                        color: Color(0xFF009688),
+                                                        fontSize: 24,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+
+                                                  const SizedBox(width: 16),
+
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                      children: [
+
+                                                        Text(
+                                                          user.name,
+                                                          maxLines: 1,
+                                                          overflow:
+                                                          TextOverflow.ellipsis,
+                                                          style: const TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight: FontWeight.bold,
+                                                          ),
+                                                        ),
+
+                                                        const SizedBox(height: 8),
+
+                                                        Row(
+                                                          children: [
+                                                            const Icon(
+                                                              Icons.email_outlined,
+                                                              size: 16,
+                                                              color:
+                                                              Color(0xFF009688),
+                                                            ),
+
+                                                            const SizedBox(width: 6),
+
+                                                            Expanded(
+                                                              child: Text(
+                                                                user.email,
+                                                                maxLines: 1,
+                                                                overflow:
+                                                                TextOverflow.ellipsis,
+                                                                style: const TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors.grey,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+
+                                                        const SizedBox(height: 10),
+
+                                                        Container(
+                                                          constraints:
+                                                          const BoxConstraints(
+                                                            maxWidth: 140,
+                                                          ),
+                                                          padding:
+                                                          const EdgeInsets.symmetric(
+                                                            horizontal: 10,
+                                                            vertical: 5,
+                                                          ),
+
+                                                          decoration: BoxDecoration(
+                                                            color:
+                                                            const Color(0xFFE0F7F7),
+                                                            borderRadius:
+                                                            BorderRadius.circular(20),
+                                                          ),
+
+                                                          child: Text(
+                                                            "@${user.username}",
+                                                            maxLines: 1,
+                                                            overflow:
+                                                            TextOverflow.ellipsis,
+                                                            style: const TextStyle(
+                                                              color:
+                                                              Color(0xFF009688),
+                                                              fontWeight:
+                                                              FontWeight.w600,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+
+                                                  const SizedBox(width: 10),
+
+                                                  Container(
+                                                    width: 40,
+                                                    height: 40,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                      const Color(0xFF009688),
+
+                                                      borderRadius:
+                                                      BorderRadius.circular(12),
+                                                    ),
+
+                                                    child: const Icon(
+                                                      Icons.arrow_forward_ios_rounded,
+                                                      color: Colors.white,
+                                                      size: 18,
+                                                    ),
+                                                  ),
+                                                ],
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        );
+                      },
+                  ),
               );
             },
         ),
